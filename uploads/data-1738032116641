@@ -1,0 +1,119 @@
+apex.region("R").call("getActions").set("edit",true)
+apex.region("R").call("getActions").hide("save");
+
+<span class="fa fa-flashlight" aria-hidden="true">#DOC_NO# </span>
+
+apex.region("R").call("getActions").hide("edit");
+
+
+id=$(this.triggeringElement).data('id')
+
+
+
+apex.region("R").widget().interactiveGrid("getViews","grid").view$.grid("setColumnWidth", "ITEM_CODE", 180);
+apex.region("R").widget().interactiveGrid("getViews","grid").view$.grid("setColumnWidth", "DUMMY", 10);
+
+----- interactive report
+------------------------
+
+<span style="display:block; width:30px">#TOT_PROFIT#</span>
+
+th#R {max-width:30;}
+th#R {width:30;}
+
+table.apexir_WORKSHEET_DATA th {min-width:200px;}
+myReport td[headers=myColumn1]{ width:100px; }
+
+
+------------------------------------------------
+button-create-new 
+
+
+x:=CONFIRM_INV_30_CREDIT(v_ref);
+--pl
+
+apex_error.add_error (
+    p_message          => 'Invalid Customer ID!',
+    p_display_location =>  apex_error.c_inline_with_field_and_notif,
+    p_page_item_name   => 'P5_CUSTOMER_ID');
+
+
+
+------------- TIME FOR WATCHING MESSAGESS
+
+IN PAGE 0       PAGE LOAD
+
+
+apex.jQuery(function() {
+  apex.theme42.util.configAPEXMsgs({
+    autoDismiss: true,
+    duration: 1000  // duration is optional (Default is 3000 milliseconds)
+  });
+});
+
+SELECT DECODE(nvl(:P_LANG,'en'),'en',JNL_name_e,JNL_name) display,JNL_code return
+from GL_JNL
+-----EMP LOV
+SELECT DECODE(nvl(:P_LANG,'en'),'en',EMP_NAME_E,EMP_NAME_A) dv,EMP_NO rv from HR_EMP
+WHERE
+FIRM_NO=:P_FIRM_NO and branch_no=:P210_BRANCH_NO
+
+--BRAN LOV
+SELECT DECODE(nvl(:P_LANG,'en'),'en',A.BRANCH_NAME_E,A.BRANCH_NAME) dv,A.BRANCH_NO rv from SM_BRANCHES A  , SM_USER_BRANCHES B
+WHERE
+A.FIRM_NO=:P_FIRM_NO AND
+A.BRANCH_NO=B.BRANCH_NO AND
+B.USER_NO IN (SELECT USER_NO FROM SM_USERS WHERE UPPER(USER_NAME)=:APP_USER)
+
+تعريب الجرد
+--------------------
+
+ig init
+
+function(config) {
+    let $             = apex.jQuery,
+        toolbarData   = $.apex.interactiveGrid.copyDefaultToolbar(),
+        addrowAction  = toolbarData.toolbarFind("selection-add-row"),
+        saveAction    = toolbarData.toolbarFind("save"),
+        editAction    = toolbarData.toolbarFind("edit");
+    
+ addrowAction.label =add_label;
+    addrowAction.icon = "icon-ig-add-row";
+    addrowAction.iconBeforeLabel = true;
+    addrowAction.hot = true;
+ 
+    saveAction.label =save_label;
+    saveAction.iconBeforeLabel = true;
+    saveAction.icon ="icon-ig-save-as";
+    saveAction.hot = true;
+   
+    editAction.label =edit_label;
+    editAction.iconBeforeLabel = true;
+    editAction.icon ="icon-ig-edit";
+    editAction.hot = true;
+
+    config.toolbarData = toolbarData;
+    return config;
+}
+
+
+------------------
+
+function and Global Variable Declaration
+
+let save_label=""
+let edit_label=""
+let add_label=""
+let lang="&P_LANG."
+let user="&APP_USER."
+    if (lang=='en'){
+        save_label='Save'
+         edit_label='Edit'
+          add_label='Add'
+    }else{
+         save_label='حفظ'
+          edit_label='تحديث'
+             add_label='جديد'
+    }
+
+
